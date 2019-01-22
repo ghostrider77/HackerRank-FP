@@ -42,4 +42,47 @@ class IntroductionSuite extends FreeSpec with Matchers {
       filterOddPositions(lst) shouldEqual List(5, 4, 7, 8)
     }
   }
+
+  "ArrayOfNElements" - {
+    import ArrayOfNElements.createList
+
+    "should create a list of given length" in {
+      val n: Int = 10
+      createList(10) should have length n
+    }
+  }
+
+  "ReverseAList" - {
+    import ReverseAList.reverse
+
+    "should reverse a list" in {
+      val lst: List[Int] = List(19, 22, 3, 28, 26, 17, 18, 4, 28, 0)
+      reverse(lst) shouldEqual List(0, 28, 4, 18, 17, 26, 28, 3, 22, 19)
+    }
+  }
+
+  "SumOfOddElements" - {
+    import SumOfOddElements.calcSumOfOddElems
+
+    "should sum the odd elements in a list" in {
+      val lst: List[Int] = List(3, 2, 4, 6, 5, 7, 8, 0, 1)
+      calcSumOfOddElems(lst) shouldEqual 16
+    }
+  }
+
+  "ListLength" - {
+    "should calculate the length of a list" in {
+      val lst: List[Int] = List(2, 5, 1, 4, 3, 7, 8, 6, 0, 9)
+      ListLength.length(lst) shouldEqual 10
+    }
+  }
+
+  "UpdateList" - {
+    import UpdateList.replaceWithAbsoluteValue
+
+    "should replace each element with its absolute value" in {
+      val lst: List[Int] = List(2, -4, 3, -1, 23, -4, -54)
+      replaceWithAbsoluteValue(lst) shouldEqual List(2, 4, 3, 1, 23, 4, 54)
+    }
+  }
 }
