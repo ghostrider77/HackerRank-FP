@@ -1,8 +1,8 @@
 package introduction
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, Inspectors}
 
-class IntroductionSuite extends FreeSpec with Matchers {
+class IntroductionSuite extends FreeSpec with Matchers with Inspectors {
 
   "SolveMeFirst" - {
     import SolveMeFirst.sumTwoInts
@@ -83,6 +83,19 @@ class IntroductionSuite extends FreeSpec with Matchers {
     "should replace each element with its absolute value" in {
       val lst: List[Int] = List(2, -4, 3, -1, 23, -4, -54)
       replaceWithAbsoluteValue(lst) shouldEqual List(2, 4, 3, 1, 23, 4, 54)
+    }
+  }
+
+  "EvaluatingExp" - {
+    import EvaluatingExp.exponential
+
+    "should calculate e^x based on the first 10 terms of its Taylor-series" in {
+      val exponents: List[Double] = List(20.0, 5.0, 0.5, -0.5)
+      val result: List[Double] = exponents.map(exponential)
+      val expectedResult: List[Double] = List(2423600.1887, 143.6895, 1.6487, 0.6065)
+      forAll(result.zip(expectedResult)) {
+        case (x, y) => x shouldBe (y +- 0.1)
+      }
     }
   }
 }
