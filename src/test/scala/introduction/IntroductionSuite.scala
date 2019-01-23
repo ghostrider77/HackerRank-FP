@@ -98,4 +98,20 @@ class IntroductionSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "FunctionOrNot" - {
+    import FunctionOrNot.{Pair, isFunction}
+
+    "should determine if a given list of (x, y) pairs determine a function or not" in {
+      val lst1: List[Pair] = List(Pair(1, 1), Pair(2, 2), Pair(3, 3))
+      val lst2: List[Pair] = List(Pair(1, 2), Pair(2, 4), Pair(3, 6), Pair(4, 8))
+      val lst3: List[Pair] = List(Pair(1, 10), Pair(2, 20), Pair(1, 10))
+      val lst4: List[Pair] = List(Pair(1, 10), Pair(2, 20), Pair(1, 30))
+
+      isFunction(lst1) shouldBe true
+      isFunction(lst2) shouldBe true
+      isFunction(lst3) shouldBe true
+      isFunction(lst4) shouldBe false
+    }
+  }
 }
