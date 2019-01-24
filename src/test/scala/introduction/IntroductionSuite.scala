@@ -99,6 +99,19 @@ class IntroductionSuite extends FreeSpec with Matchers with Inspectors {
     }
   }
 
+  "RevolvingCurve" - {
+    import RevolvingCurve.{calcIntegral, calcVolume}
+
+    "should calculate the integral and the volume of revolution of a polynomial" in {
+      val coefficients: List[Int] = List(1)
+      val exponents: List[Int] = List(2)
+      val leftEnd: Int = 0
+      val rightEnd: Int = 1
+      calcIntegral(coefficients, exponents, leftEnd, rightEnd) shouldEqual (0.33333 +- 0.01)
+      calcVolume(coefficients, exponents, leftEnd, rightEnd) shouldEqual (0.62831 +- 0.01)
+    }
+  }
+
   "FunctionOrNot" - {
     import FunctionOrNot.{Pair, isFunction}
 
@@ -112,6 +125,24 @@ class IntroductionSuite extends FreeSpec with Matchers with Inspectors {
       isFunction(lst2) shouldBe true
       isFunction(lst3) shouldBe true
       isFunction(lst4) shouldBe false
+    }
+  }
+
+  "PolygonPerimeter" - {
+    import PolygonPerimeter.{Point, calcPolygonPerimeter}
+
+    "should calculate the perimeter of a polygon given by its vertices counter-clockwise" in {
+      val points: List[Point] = List(Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0))
+      calcPolygonPerimeter(points) shouldBe (4.0 +- 0.01)
+    }
+  }
+
+  "PolygonArea" - {
+    import PolygonArea.{Point, calcPolygonArea}
+
+    "should calculate the area of a polygon given by its vertices counter-clockwise" in {
+      val points: List[Point] = List(Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0))
+      calcPolygonArea(points) shouldBe (1.0 +- 0.01)
     }
   }
 }
