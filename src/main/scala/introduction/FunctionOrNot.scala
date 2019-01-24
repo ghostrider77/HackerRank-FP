@@ -5,6 +5,12 @@ object FunctionOrNot {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readTestCase(n: Int, reader: Iterator[String]): List[Pair] =
+    (for { _ <- 0 until n } yield {
+      val List(x, y): List[Int] = convertToIntList(reader.next())
+      Pair(x, y)
+    }).toList
+
   def isFunction(pairs: List[Pair]): Boolean =
     pairs.groupBy(_.x).mapValues(_.map(_.y).toSet).forall{ case (_, yValues) => yValues.size == 1 }
 
@@ -13,11 +19,7 @@ object FunctionOrNot {
     val nrTestCases: Int = reader.next().toInt
     val testCases: List[List[Pair]] = (for { _ <- 0 until nrTestCases } yield {
       val n: Int = reader.next().toInt
-      val pairs: List[Pair] = (for { _ <- 0 until n } yield {
-        val List(x, y): List[Int] = convertToIntList(reader.next())
-        Pair(x, y)
-      }).toList
-      pairs
+      readTestCase(n, reader)
     }).toList
     val result: List[Boolean] = testCases.map(isFunction)
     result.foreach(verdict => println(if (verdict) "YES" else "NO"))
