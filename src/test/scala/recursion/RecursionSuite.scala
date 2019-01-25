@@ -23,4 +23,13 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       fibonacci(7) shouldEqual 8
     }
   }
+
+  "PascalsTriangle" - {
+    import PascalsTriangle.calcPascalsTriangle
+
+    "should calculate the first few rows of the Pascal's triangle" in {
+      val n: Int = 4
+      calcPascalsTriangle(4) shouldEqual List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1))
+    }
+  }
 }
