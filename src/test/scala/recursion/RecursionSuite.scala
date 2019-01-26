@@ -32,4 +32,22 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       calcPascalsTriangle(4) shouldEqual List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1))
     }
   }
+
+  "StringMingling" - {
+    import StringMingling.interleave
+
+    "should interleave 2 strings of the same length" in {
+      interleave("abcde", "pqrst") shouldEqual "apbqcrdset"
+      interleave("hacker", "ranker") shouldEqual "hraacnkkeerr"
+    }
+  }
+
+  "StringOPermute" - {
+    import StringOPermute.permute
+
+    "should swap each consecutive character-pairs" in {
+      permute("abcdpqrs") shouldEqual "badcqpsr"
+      permute("az") shouldEqual "za"
+    }
+  }
 }
