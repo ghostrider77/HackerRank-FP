@@ -19,7 +19,7 @@ object SierpinskiTriangle {
     }
 
     fillTriangle(n, topX = 0, topY = 31, height = 32)
-    grid.foreach(row => println(row.mkString("")))
+    grid.foreach(row => println(row.mkString))
   }
 
   def main(args: Array[String]): Unit = {
