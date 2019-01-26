@@ -29,7 +29,7 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
 
     "should calculate the first few rows of the Pascal's triangle" in {
       val n: Int = 4
-      calcPascalsTriangle(4) shouldEqual List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1))
+      calcPascalsTriangle(n) shouldEqual List(List(1), List(1, 1), List(1, 2, 1), List(1, 3, 3, 1))
     }
   }
 
@@ -48,6 +48,35 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
     "should swap each consecutive character-pairs" in {
       permute("abcdpqrs") shouldEqual "badcqpsr"
       permute("az") shouldEqual "za"
+    }
+  }
+
+  "ConvexHull" - {
+    import ConvexHull.{Point, calcConvexHullPerimeter}
+
+    "should calculate the perimeter of the convex hull of a polygon" - {
+      "test case 1" in {
+        val points: List[Point] = List(Point(1, 1), Point(2, 5), Point(3, 3), Point(5, 3), Point(3, 2), Point(2, 2))
+        calcConvexHullPerimeter(points) shouldBe (12.200792856 +- 0.2)
+      }
+
+      "test case 2" in {
+        val points: List[Point] =
+          List(
+            Point(3, 0),
+            Point(2, 0),
+            Point(1, 0),
+            Point(0, 0),
+            Point(1, 1),
+            Point(2, 1),
+            Point(3, 1),
+            Point(3, 2),
+            Point(2, 2),
+            Point(3, 3)
+          )
+        val expectedPerimeter: Double = 6 + 3*math.sqrt(2.0)
+        calcConvexHullPerimeter(points) shouldBe (expectedPerimeter +- 0.2)
+      }
     }
   }
 }
