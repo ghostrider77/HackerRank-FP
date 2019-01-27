@@ -116,4 +116,23 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       calcNumberOfWays(10) shouldEqual 4
     }
   }
+
+  "SumOfPowers" - {
+    import SumOfPowers.sumOfPowers
+
+    "should calculate the number of ways that an integer is the sum of the power of unique natural numbers" in {
+      sumOfPowers(10, 2) shouldEqual 1
+      sumOfPowers(100, 2) shouldEqual 3
+      sumOfPowers(100, 3) shouldEqual 1
+    }
+  }
+
+  "SequenceFullOfColors" - {
+    import SequenceFullOfColors.hasFullColors
+
+    "should check if a sequence of colors satisfies some conditions" in {
+      val inputs: List[String] = List("RGGR", "RYBG", "RYRB", "YGYGRBRB")
+      inputs.map(hasFullColors) shouldEqual List(true, true, false, false)
+    }
+  }
 }
