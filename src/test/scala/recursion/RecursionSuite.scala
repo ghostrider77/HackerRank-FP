@@ -79,4 +79,33 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "StringCompression" - {
+    import StringCompression.compress
+
+    "should compress a string" in {
+      val input: List[String] = List("abcaaabbb", "abcd", "aaabaaaaccaaaaba")
+      input.map(compress) shouldEqual List("abca3b3", "abcd", "a3ba4c2a4ba")
+    }
+  }
+
+  "PefixCompression" - {
+    import PrefixCompression.{Result, findCommonPrefix}
+
+    "should find the common prefix of 2 strings" in {
+      val Result(p, suff1, suff2) = findCommonPrefix("abcdefpr".toList, "abcpqr".toList)
+      p shouldEqual "abc"
+      suff1 shouldEqual "defpr"
+      suff2 shouldEqual "pqr"
+    }
+  }
+
+  "StringReduction" - {
+    import StringReductions.keepUniqueCharacters
+
+    "should keep those characters that do not occured previously in a string" in {
+      val inputs: List[String] = List("accabb", "abc", "pprrqq", "abcaaaaaaaaaaabbbbbbbcccccccd")
+      inputs.map(keepUniqueCharacters) shouldEqual List("acb", "abc", "prq", "abcd")
+    }
+  }
 }
