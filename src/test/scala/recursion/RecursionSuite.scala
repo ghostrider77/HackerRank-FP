@@ -108,4 +108,12 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       inputs.map(keepUniqueCharacters) shouldEqual List("acb", "abc", "prq", "abcd")
     }
   }
+
+  "SuperQueens" - {
+    import SuperQueens.calcNumberOfWays
+
+    "should calculate the number of ways to place n super-queens onto a chessboard of size n" in {
+      calcNumberOfWays(10) shouldEqual 4
+    }
+  }
 }
