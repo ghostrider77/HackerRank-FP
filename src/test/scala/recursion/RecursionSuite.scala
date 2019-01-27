@@ -135,4 +135,18 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       inputs.map(hasFullColors) shouldEqual List(true, true, false, false)
     }
   }
+
+  "FilterElements" - {
+    import FilterElements.{TestCase, filterElements}
+
+    "should return those elements in the order of their first appearance that occurs at least k times" in {
+      val input: List[TestCase] =
+        List(
+          TestCase(sequence = List(4, 5, 2, 5, 4, 3, 1, 3, 4), k = 2),
+          TestCase(sequence = List(4, 5, 2, 5, 4, 3, 1, 3, 4), k = 4),
+          TestCase(sequence = List(5, 4, 3, 2, 1, 1, 2, 3, 4, 5), k = 2),
+        )
+      input.map(filterElements) shouldEqual List(List(4, 5, 3), List(-1), List(5, 4, 3, 2, 1))
+    }
+  }
 }
