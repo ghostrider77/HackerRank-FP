@@ -149,4 +149,38 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       input.map(filterElements) shouldEqual List(List(4, 5, 3), List(-1), List(5, 4, 3, 2, 1))
     }
   }
+
+  "SuperDigit" - {
+    import SuperDigit.calcCompoundSuperDigit
+
+    "should compute the super-digit of an integer concatenated n times" in {
+      calcCompoundSuperDigit("148", 3) shouldEqual 3
+    }
+  }
+
+  "ConcavePolygon" - {
+    import ConcavePolygon.{Point, isPolygonConcave}
+
+    "should determine whether a polygon given by its vertices is concave" - {
+      "test case 1" in {
+        val points: List[Point] = List(Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0))
+        isPolygonConcave(points) shouldBe false
+      }
+
+      "test case 2" in {
+        val points: List[Point] = List(Point(0, 0), Point(2, 0), Point(0, 2), Point(2, 2), Point(1, 0))
+        isPolygonConcave(points) shouldBe false
+      }
+
+      "test case 3" in {
+        val points: List[Point] = List(Point(0, 0), Point(2, 0), Point(3, -1), Point(4, 2), Point(2, 2), Point(1, 1))
+        isPolygonConcave(points) shouldBe true
+      }
+
+      "test case 4" in {
+        val points: List[Point] = List(Point(4, 0), Point(2, 1), Point(3, -1), Point(2, 0), Point(1, -1), Point(0, 0))
+        isPolygonConcave(points) shouldBe true
+      }
+    }
+  }
 }
