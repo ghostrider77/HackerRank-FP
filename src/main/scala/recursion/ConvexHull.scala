@@ -47,7 +47,7 @@ object ConvexHull {
     loop(Nil, sortedPoints.head, sortedPoints.sliding(2, 1).toList)
   }
 
-  def getReorderedPoints(points: List[Point], ix: Index): (Point, List[Point]) = {
+  private def getReorderedPoints(points: List[Point], ix: Index): (Point, List[Point]) = {
     val (left, right): (List[Point], List[Point]) = points.splitAt(ix)
     val p: Point = right.head
     val sortedPoints: List[Point] = sortPointsAngleWithP(p, left ::: right.tail)
