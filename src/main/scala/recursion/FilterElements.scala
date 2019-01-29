@@ -27,6 +27,6 @@ object FilterElements {
       TestCase(seq, k)
     }).toList
     val result: List[List[Int]] = testCases.map(filterElements)
-    result.foreach(lst => println(lst.mkString))
+    result.foreach(lst => println(lst.mkString(" ")))
   }
 }
