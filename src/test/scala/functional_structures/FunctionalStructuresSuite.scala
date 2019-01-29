@@ -37,4 +37,20 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "ValidBinarySearchTree" - {
+    import ValidBST.isValidBST
+
+    "should determine if a given list is a preorder traversal of a valid binary search tree" in {
+      val input: List[List[Int]] =
+        List(
+          List(1, 2, 3),
+          List(2, 1, 3),
+          List(3, 2, 1, 5, 4, 6),
+          List(1, 3, 4, 2),
+          List(3, 4, 5, 1, 2)
+        )
+      input.map(isValidBST) shouldEqual List(true, true, true, false, false)
+    }
+  }
 }
