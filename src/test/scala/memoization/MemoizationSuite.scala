@@ -21,4 +21,23 @@ class MemoizationSuite extends FreeSpec with Matchers {
       ns.map(pentagonalNumber) shouldEqual List(1, 5, 12, 22, 35)
     }
   }
+
+  "BitterChocolate" - {
+    import BitterChocolate.{Board, doesFirstPlayerWin}
+
+    "should determine if the first player wins the bitter chocolate game" in {
+      val boardSizes: List[Board] =
+        List(Board(upper = 1, middle = 1, lower = 1), Board(upper = 1, middle = 2, lower = 2))
+      boardSizes.map(doesFirstPlayerWin) shouldEqual List(true, false)
+    }
+  }
+
+  "Fibonacci" - {
+    import Fibonacci.calcModuloFibonacci
+
+    "should calculate the Fibonacci number modulo of a large prime" in {
+      val ns: List[Int] = List(0, 1, 5, 10, 100)
+      calcModuloFibonacci(ns) shouldEqual List(0, 1, 5, 55, 24278230)
+    }
+  }
 }
