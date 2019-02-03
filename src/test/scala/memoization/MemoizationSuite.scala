@@ -40,4 +40,18 @@ class MemoizationSuite extends FreeSpec with Matchers {
       calcModuloFibonacci(ns) shouldEqual List(0, 1, 5, 55, 24278230)
     }
   }
+
+  "BangaloreBank" - {
+    import BangaloreBank.calcMinimumTypingTime
+
+    "should calculate the minimum time required to rewrite the bank account number" in {
+      val inputs: List[List[Int]] =
+        List(
+          List(1, 2),
+          List(1, 10, 3),
+          List(2, 5, 1)
+        )
+      inputs.map(calcMinimumTypingTime) shouldEqual List(2, 5, 4)
+    }
+  }
 }
