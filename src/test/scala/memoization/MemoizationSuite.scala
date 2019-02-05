@@ -54,4 +54,22 @@ class MemoizationSuite extends FreeSpec with Matchers {
       inputs.map(calcMinimumTypingTime) shouldEqual List(2, 5, 4)
     }
   }
+
+  "Expressions" - {
+    import Expressions.findExpression
+
+    "should create an expressions from a given list of integers that divisble by 101" - {
+      "test case 1" in {
+        val numbers: List[Int] = List(22, 79, 21)
+        val n: Int = numbers.length
+        findExpression(numbers, n) shouldEqual "22+79*21"
+      }
+
+      "test case 2" in {
+        val numbers: List[Int] = List(55, 3, 45, 33, 25)
+        val n: Int = numbers.length
+        findExpression(numbers, n) shouldEqual "55*3+45-33+25"
+      }
+    }
+  }
 }
