@@ -42,7 +42,6 @@ object ConcavePolygon {
   }
 
   private def isConcaveTripleFoundDuringGrahamScan(orderedPoints: List[Point]): Boolean = {
-    println(orderedPoints)
     val (left, right): (List[Point], List[Point]) = orderedPoints.splitAt(3)
 
     @tailrec
