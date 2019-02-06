@@ -72,4 +72,16 @@ class MemoizationSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "SherlockAndTheMaze" - {
+    import SherlockAndTheMaze.calcNumberOfPathsWithAtMostKTurns
+
+    "should calculate the number of roads from top left to bottom right corner containing at most k turns" in {
+      calcNumberOfPathsWithAtMostKTurns(1, 1, 0) shouldEqual 1
+      calcNumberOfPathsWithAtMostKTurns(2, 2, 0) shouldEqual 0
+      calcNumberOfPathsWithAtMostKTurns(2, 2, 3) shouldEqual 2
+      calcNumberOfPathsWithAtMostKTurns(2, 3, 1) shouldEqual 2
+      calcNumberOfPathsWithAtMostKTurns(4, 4, 4) shouldEqual 18
+    }
+  }
 }
