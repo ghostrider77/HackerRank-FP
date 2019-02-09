@@ -84,4 +84,13 @@ class MemoizationSuite extends FreeSpec with Matchers {
       calcNumberOfPathsWithAtMostKTurns(4, 4, 4) shouldEqual 18
     }
   }
+
+  "DicePath" - {
+    import DicePath.calcSumOfMaximalPaths
+
+    "should calculate the sum of maximal path to the bottom right corner of a grid" in {
+      val gridsizes: List[(Int, Int)] = List((2, 2), (1, 2), (2, 1), (3, 3))
+      calcSumOfMaximalPaths(gridsizes) shouldEqual List(9, 4, 6, 19)
+    }
+  }
 }
