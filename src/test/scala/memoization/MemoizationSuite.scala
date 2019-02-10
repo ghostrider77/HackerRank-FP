@@ -93,4 +93,20 @@ class MemoizationSuite extends FreeSpec with Matchers {
       calcSumOfMaximalPaths(gridsizes) shouldEqual List(9, 4, 6, 19)
     }
   }
+
+  "DifferentWays" - {
+    import DifferentWays.{CombinationParameters, differentWays}
+
+    "should calculate n choose k modulo a large integer" in {
+      val input: List[CombinationParameters] =
+        List(
+          CombinationParameters(2, 1),
+          CombinationParameters(5, 1),
+          CombinationParameters(5, 2),
+          CombinationParameters(5, 3),
+          CombinationParameters(10, 5)
+        )
+      differentWays(input) shouldEqual List(2, 5, 10, 10, 252)
+    }
+  }
 }
