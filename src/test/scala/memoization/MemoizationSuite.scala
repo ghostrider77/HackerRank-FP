@@ -109,4 +109,46 @@ class MemoizationSuite extends FreeSpec with Matchers {
       differentWays(input) shouldEqual List(2, 5, 10, 10, 252)
     }
   }
+
+  "ReverseFactorization" - {
+    import ReverseFactorization.calcShortestFactorization
+
+    "should calculate the shortest and lexicographically smallest path to a given integer" - {
+      "test case 1" in {
+        val target: Int = 12
+        val factors: List[Int] = List(2, 3, 4)
+        calcShortestFactorization(factors, target) shouldEqual List(1, 3, 12)
+      }
+
+      "test case 2" in {
+        val target: Int = 15
+        val factors: List[Int] = List(2, 10, 6, 9, 11)
+        calcShortestFactorization(factors, target) shouldEqual List(-1)
+      }
+
+      "test case 3" in {
+        val target: Int = 72
+        val factors: List[Int] = List(2, 4, 6, 9, 3, 7, 16, 10, 5)
+        calcShortestFactorization(factors, target) shouldEqual List(1, 2, 8, 72)
+      }
+
+      "test case 4" in {
+        val target: Int = 24
+        val factors: List[Int] = List(4, 6, 8)
+        calcShortestFactorization(factors, target) shouldEqual List(1, 4, 24)
+      }
+
+      "test case 5" in {
+        val target: Int = 16
+        val factors: List[Int] = List(4, 8)
+        calcShortestFactorization(factors, target) shouldEqual List(1, 4, 16)
+      }
+
+      "test case 6" in {
+        val target: Int = 36
+        val factors: List[Int] = List(18, 9, 4)
+        calcShortestFactorization(factors, target) shouldEqual List(1, 4, 36)
+      }
+    }
+  }
 }
