@@ -151,4 +151,66 @@ class MemoizationSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "PasswordCracker" - {
+    import PasswordCracker.{LoginAttempt, getPasswords}
+
+    def isResultValid(passwords: List[String], decomposedPassword: String, attempt: String): Boolean = {
+      val split: List[String] = decomposedPassword.split(" ").toList
+      split.forall(passwords.contains) && split.mkString == attempt
+    }
+
+    "should decide if a string can be written as a concatenation of passwords" - {
+      "test case 1" in {
+        val passwords: List[String] = List("because", "can", "do", "must", "we", "what")
+        val attempt: String = "wedowhatwemustbecausewecan"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        isResultValid(passwords, result, attempt) shouldBe true
+      }
+
+      "test case 2" in {
+        val passwords: List[String] = List("hello", "planet")
+        val attempt: String = "helloworld"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        result shouldEqual "WRONG PASSWORD"
+      }
+
+      "test case 3" in {
+        val passwords: List[String] = List("ab", "abcd", "cd")
+        val attempt: String = "abcd"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        isResultValid(passwords, result, attempt) shouldBe true
+      }
+
+      "test case 4" in {
+        val passwords: List[String] = List("ozkxyhkcst", "xvglh", "hpdnb", "zfzahm")
+        val attempt: String = "zfzahm"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        isResultValid(passwords, result, attempt) shouldBe true
+      }
+
+      "test case 5" in {
+        val passwords: List[String] = List("gurwgrb", "maqz", "holpkhqx", "aowypvopu")
+        val attempt: String = "gurwgrb"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        isResultValid(passwords, result, attempt) shouldBe true
+      }
+
+      "test case 6" in {
+        val passwords: List[String] =
+          List("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")
+        val attempt: String = "aaaaaaaaaab"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        result shouldEqual "WRONG PASSWORD"
+      }
+
+      "test case 7" in {
+        val passwords: List[String] =
+          List("ab", "abcd", "cde", "f")
+        val attempt: String = "abcdef"
+        val result: String = getPasswords(LoginAttempt(passwords, attempt))
+        isResultValid(passwords, result, attempt) shouldBe true
+      }
+    }
+  }
 }
