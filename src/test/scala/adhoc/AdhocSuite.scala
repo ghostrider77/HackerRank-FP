@@ -49,4 +49,19 @@ class AdhocSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "SubstringSearching" - {
+    import SubstringSearching.{TextData, doesPatternOccurAsSubstring}
+
+    "should detect if pattern appears as substring in the given text" in {
+      val input: List[TextData] =
+        List(
+          TextData(text = "abcdef", pattern = "def"),
+          TextData(text = "computer", pattern = "muter"),
+          TextData(text = "stringmatchingmat", pattern = "ingmat"),
+          TextData(text = "videobox", pattern = "videobox")
+        )
+      input.map(doesPatternOccurAsSubstring) shouldEqual List(true, false, true, true)
+    }
+  }
 }
