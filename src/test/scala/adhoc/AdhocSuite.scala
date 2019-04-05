@@ -1,8 +1,8 @@
 package adhoc
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, Inspectors}
 
-class AdhocSuite extends FreeSpec with Matchers {
+class AdhocSuite extends FreeSpec with Matchers with Inspectors {
 
   "JumpingBunnies" - {
     import JumpingBunnies.calcLeastCommonMultiple
@@ -27,6 +27,19 @@ class AdhocSuite extends FreeSpec with Matchers {
           List("aaa", "aaa", "aaa"),
           List("z")
         )
+    }
+  }
+
+  "KunduAndBubbleWrap" - {
+    import KunduAndBubbleWrap.calculateExpectedNumberOfTrials
+
+    "should calculate the expected number of steps for popping out all bubbles" in {
+      val inputs: List[(Int, Int)] = List((1, 1), (1, 2), (2, 2))
+      val results: List[Double] = inputs.map{ case (n, m) => calculateExpectedNumberOfTrials(n * m) }
+      val expectedResults: List[Double] = List(1.0, 3.0, 8.333333)
+      forAll (results.zip(expectedResults)) {
+        case (result, expected) => result shouldBe (expected +- 1e-3)
+      }
     }
   }
 }
