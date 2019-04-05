@@ -1,11 +1,11 @@
-package adhoc
+package functional_structures
 
 object ListAndGCD {
   type CanonicalForm = Map[Int, Int]
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
-  private[adhoc] def readCanonicalForm(line: String): CanonicalForm =
+  private[functional_structures] def readCanonicalForm(line: String): CanonicalForm =
     convertToIntList(line).grouped(2).map{ case List(p, exp) => (p, exp) }.toMap
 
   def calcGCD(numbers: List[CanonicalForm]): CanonicalForm = {

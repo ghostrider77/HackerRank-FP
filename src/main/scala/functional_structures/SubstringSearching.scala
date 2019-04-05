@@ -1,4 +1,4 @@
-package adhoc
+package functional_structures
 
 object SubstringSearching {
   import scala.annotation.tailrec
