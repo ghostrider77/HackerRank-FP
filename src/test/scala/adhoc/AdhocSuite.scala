@@ -61,4 +61,14 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       inputs.map{ case List(n, m) => calcNumberOfCommonDivisors(n, m) } shouldEqual List(2, 1, 10, 4, 3)
     }
   }
+
+  "SubsetSum" - {
+    import SubsetSum.calcMinimumSubsetSizes
+
+    "should find the size of the smallest subset whose sum is greater than or equal to the query number" in {
+      val numbers: Vector[Int] = Vector(4, 8, 10, 12)
+      val queries: List[Long] = List(4, 13, 30, 100)
+      calcMinimumSubsetSizes(numbers, numbers.length, queries) shouldEqual List(1, 2, 3, -1)
+    }
+  }
 }
