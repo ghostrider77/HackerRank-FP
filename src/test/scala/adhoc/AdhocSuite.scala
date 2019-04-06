@@ -42,4 +42,14 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "MissingNumbers" - {
+    import MissingNumbers.getMissingElements
+
+    "should retrieve those numbers from the second list that appear less in the first list" in {
+      val firstList: List[Int] = List(203, 204, 205, 206, 207, 208, 203, 204, 205, 206)
+      val secondList: List[Int] = List(203, 204, 204, 205, 206, 207, 205, 208, 203, 206, 205, 206, 204)
+      getMissingElements(firstList, secondList) shouldEqual List(204, 205, 206)
+    }
+  }
 }
