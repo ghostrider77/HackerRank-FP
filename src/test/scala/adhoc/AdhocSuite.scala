@@ -52,4 +52,13 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       getMissingElements(firstList, secondList) shouldEqual List(204, 205, 206)
     }
   }
+
+  "CommonDivisors" - {
+    import CommonDivisors.calcNumberOfCommonDivisors
+
+    "should calculate the number of common divisors of two integers" in {
+      val inputs: List[List[Int]] = List(List(10, 4), List(1, 100), List(288, 240), List(85085, 453600), List(36, 27))
+      inputs.map{ case List(n, m) => calcNumberOfCommonDivisors(n, m) } shouldEqual List(2, 1, 10, 4, 3)
+    }
+  }
 }
