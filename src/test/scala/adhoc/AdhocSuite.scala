@@ -71,4 +71,34 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       calcMinimumSubsetSizes(numbers, numbers.length, queries) shouldEqual List(1, 2, 3, -1)
     }
   }
+
+  "Mangoes" - {
+    import Mangoes.calcMaximalNumberOfGuests
+
+    "should calculate the largest number of friends who can eat the available mangoes" - {
+      "test case 1" in {
+        val nrFriends: Int = 5
+        val nrMangoes: Long = 200
+        val appetite: List[Int] = List(2, 5, 3, 2, 4)
+        val happiness: List[Int] = List(30, 40, 10, 20, 30)
+        calcMaximalNumberOfGuests(appetite, happiness, nrFriends, nrMangoes) shouldEqual 3
+      }
+
+      "test case 2" in {
+        val nrFriends: Int = 2
+        val nrMangoes: Int = 100
+        val appetite: List[Int] = List(3, 4)
+        val happiness: List[Int] = List(1, 2)
+        calcMaximalNumberOfGuests(appetite, happiness, nrFriends, nrMangoes) shouldEqual 2
+      }
+
+      "test case 3" in {
+        val nrFriends: Int = 5
+        val nrMangoes: Int = 100
+        val appetite: List[Int] = List(100, 1000, 10000, 100000, 100)
+        val happiness: List[Int] = List(100, 1000, 10000, 100000, 100)
+        calcMaximalNumberOfGuests(appetite, happiness, nrFriends, nrMangoes) shouldEqual 1
+      }
+    }
+  }
 }
