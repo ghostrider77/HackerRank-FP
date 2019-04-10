@@ -101,4 +101,13 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "GameOfKayles" - {
+    import GameOfKayles.doesFirstPlayerWin
+
+    "should return if the first player wins the game of Kayles" in {
+      val initialPinConfigurations: List[String] = List("IXXI", "XIIX", "IIXII", "IIIII")
+      doesFirstPlayerWin(initialPinConfigurations) shouldEqual List(false, true, false, true)
+    }
+  }
 }
