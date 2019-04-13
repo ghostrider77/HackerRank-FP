@@ -110,4 +110,31 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       doesFirstPlayerWin(initialPinConfigurations) shouldEqual List(false, true, false, true)
     }
   }
+
+  "RemoveDuplicates" - {
+    import RemoveDuplicates.keepUniqueCharacters
+
+    "should keep the first occurrence of each letter" in {
+      val inputs: List[String] = List("aabc", "ccbabacc")
+      inputs.map(keepUniqueCharacters) shouldEqual List("abc", "cba")
+    }
+  }
+
+  "HugeGCD" - {
+    import HugeGCD.calcGCGModulo
+
+    "should calculate the greatest common division of two numbers modulo M given by their factors" - {
+      "test case 1" in {
+        val xs: List[Int] = List(2, 2, 3, 3, 25)
+        val ys: List[Int] = List(8, 1, 6, 170)
+        calcGCGModulo(xs, ys) shouldEqual 60
+      }
+
+      "test case 2" in {
+        val xs: List[Int] = List(1, 2, 4, 8, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192)
+        val ys: List[Int] = List(1, 3, 9, 27, 81, 243, 729, 2187, 6561)
+        calcGCGModulo(xs, ys) shouldEqual 1
+      }
+    }
+  }
 }
