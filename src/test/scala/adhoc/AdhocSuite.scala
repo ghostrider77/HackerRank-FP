@@ -153,4 +153,27 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "Puzzle" - {
+    import Puzzle.{Point, Tromino, solvePuzzle}
+    val upperLeftCorner = Point(1, 1)
+
+    "should calculate a valid covering of a grid with trominoes" - {
+      "test case 1" in {
+        solvePuzzle(2, Point(2, 2), upperLeftCorner).toSet shouldEqual
+          Set(Tromino(Point(1, 1), Point(1, 2), Point(2, 1)))
+      }
+
+      "test case 2" in {
+        solvePuzzle(4, Point(1, 1), upperLeftCorner).toSet shouldEqual
+          Set(
+            Tromino(Point(2, 3), Point(3, 2), Point(3, 3)),
+            Tromino(Point(1, 2), Point(2, 1), Point(2, 2)),
+            Tromino(Point(1, 3), Point(1, 4), Point(2, 4)),
+            Tromino(Point(3, 1), Point(4, 1), Point(4, 2)),
+            Tromino(Point(3, 4), Point(4, 3), Point(4, 4))
+          )
+      }
+    }
+  }
 }
