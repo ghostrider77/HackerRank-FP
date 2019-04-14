@@ -9,7 +9,7 @@ object HugeGCD {
 
   private val Modulus: Int = 1e9.toInt + 7
   private val UpperLimit: Int = 1e4.toInt
-  lazy val Primes: List[Int] = getPrimes(UpperLimit)
+  private val Primes: List[Int] = getPrimes(UpperLimit)
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 

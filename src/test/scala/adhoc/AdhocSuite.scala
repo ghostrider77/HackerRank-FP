@@ -137,4 +137,20 @@ class AdhocSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "CaptainPrime" - {
+    import CaptainPrime.calculateIdType
+
+    "should decide the fate of seamen based on their ids" - {
+      "test case 1" in {
+        val ids: List[Int] = List(3137, 1367, 2333, 101, 12)
+        calculateIdType(ids) shouldEqual List("CENTRAL", "LEFT", "RIGHT", "DEAD", "DEAD")
+      }
+
+      "test case 2" in {
+        val ids: List[Int] = List(43, 23, 66, 29)
+        calculateIdType(ids) shouldEqual List("LEFT", "CENTRAL", "DEAD", "RIGHT")
+      }
+    }
+  }
 }
