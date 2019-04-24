@@ -88,4 +88,54 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       input.map(doesPatternOccurAsSubstring) shouldEqual List(true, false, true, true)
     }
   }
+
+  "MatrixRotation" - {
+    import functional_structures.MatrixRotation.{Matrix, calcRotatedMatrix}
+
+    "should rotate the matrices in counterclockwise direction" - {
+      "test case 1" in {
+        val nRows: Int = 4
+        val nCols: Int = 4
+        val r: Int = 1
+        val matrix: Matrix =
+          Vector(Vector(1, 2, 3, 4), Vector(5, 6, 7, 8), Vector(9, 10, 11, 12), Vector(13, 14, 15, 16))
+        calcRotatedMatrix(matrix, nRows, nCols, r) shouldEqual
+          Vector(Vector(2, 3, 4, 8), Vector(1, 7, 11, 12), Vector(5, 6, 10, 16), Vector(9, 13, 14, 15))
+      }
+
+      "test case 2" in {
+        val nRows: Int = 4
+        val nCols: Int = 4
+        val r: Int = 2
+        val matrix: Matrix =
+          Vector(Vector(1, 2, 3, 4), Vector(5, 6, 7, 8), Vector(9, 10, 11, 12), Vector(13, 14, 15, 16))
+        calcRotatedMatrix(matrix, nRows, nCols, r) shouldEqual
+          Vector(Vector(3, 4, 8, 12), Vector(2, 11, 10, 16), Vector(1, 7, 6, 15), Vector(5, 9, 13, 14))
+      }
+
+      "test case 3" in {
+        val nRows: Int = 5
+        val nCols: Int = 4
+        val r: Int = 7
+        val matrix: Matrix =
+          Vector(
+            Vector(1, 2, 3, 4),
+            Vector(7, 8, 9, 10),
+            Vector(13, 14, 15, 16),
+            Vector(19, 20, 21, 22),
+            Vector(25, 26, 27, 28)
+          )
+        calcRotatedMatrix(matrix, nRows, nCols, r) shouldEqual Vector(Vector(28, 27, 26, 25), Vector(22, 9, 15, 19),
+            Vector(16, 8, 21, 13), Vector(10, 14, 20, 7), Vector(4, 3, 2, 1))
+      }
+
+      "test case 4" in {
+        val nRows: Int = 2
+        val nCols: Int = 2
+        val r: Int = 3
+        val matrix: Matrix = Vector(Vector(1, 1), Vector(1, 1))
+        calcRotatedMatrix(matrix, nRows, nCols, r) shouldEqual Vector(Vector(1, 1), Vector(1, 1))
+      }
+    }
+  }
 }
