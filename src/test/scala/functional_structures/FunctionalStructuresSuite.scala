@@ -138,4 +138,28 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "TreeManager" - {
+    import TreeManager.{Operation, performTreeOperations, readOperations}
+
+    "should handle all the tree operations" in {
+      val nrOperations: Int = 11
+      val input: Iterator[String] =
+        List(
+          "change 1",
+          "print",
+          "insert child 2",
+          "visit child 1",
+          "insert right 3",
+          "visit right",
+          "print",
+          "insert right 4",
+          "delete",
+          "visit child 2",
+          "print"
+      ).toIterator
+      val treeOperations: List[Operation] = readOperations(input, nrOperations)
+      performTreeOperations(treeOperations) shouldEqual List(1, 3, 4)
+    }
+  }
 }
