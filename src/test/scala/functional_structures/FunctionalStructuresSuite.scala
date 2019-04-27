@@ -162,4 +162,22 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       performTreeOperations(treeOperations) shouldEqual List(1, 3, 4)
     }
   }
+
+  "PrisonTransport" - {
+    import PrisonTransport.calcMinimalTransportationCost
+
+    "should calculate the minimum cost of transporting prisoners" - {
+      "test case 1" in {
+        val nrPrisoners: Int = 4
+        val handcuffedPairs: List[(Int, Int)] = List((0, 1), (0, 3))
+        calcMinimalTransportationCost(nrPrisoners, handcuffedPairs) shouldEqual 3
+      }
+
+      "test case 2" in {
+        val nrPrisoners: Int = 10
+        val handcuffedPairs: List[(Int, Int)] = List((0, 9), (9, 2), (1, 2), (3, 4), (3, 6), (3, 7), (6, 8), (4, 8))
+        calcMinimalTransportationCost(nrPrisoners, handcuffedPairs) shouldEqual 6
+      }
+    }
+  }
 }
