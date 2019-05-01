@@ -180,4 +180,14 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "FightingArmies" - {
+    import FightingArmies.manageArmies
+
+    "should retrieve the maximum combat ability for any given armies" in {
+      val nrArmies: Int = 2
+      val events: Iterator[String] = List("3 1 10", "3 2 20", "4 1 2", "1 1", "2 1", "1 1").toIterator
+      manageArmies(events, nrArmies) shouldEqual List(20, 10)
+    }
+  }
 }
