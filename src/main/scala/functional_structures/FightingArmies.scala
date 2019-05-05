@@ -2,8 +2,6 @@ package functional_structures
 
 object FightingArmies {
   import scala.annotation.tailrec
-  import scala.collection.breakOut
-  import scala.collection.mutable.{Map => MutableMap}
 
   sealed trait PairingHeap
   final case object Empty extends PairingHeap
@@ -42,7 +40,7 @@ object FightingArmies {
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
   def manageArmies(reader: Iterator[String], nrArmies: Int): List[Int] = {
-    val armies: MutableMap[Int, PairingHeap] = (1 to nrArmies).map((_, Empty))(breakOut)
+    val armies: Array[PairingHeap] = Array.fill(nrArmies)(Empty)
 
     @tailrec
     def loop(acc: List[Int]): List[Int] = {
@@ -50,16 +48,16 @@ object FightingArmies {
       else {
         convertToIntList(reader.next()) match {
           case List(1, armyIx) =>
-            loop(findMax(armies(armyIx)) :: acc)
+            loop(findMax(armies(armyIx - 1)) :: acc)
           case List(2, armyIx) =>
-            armies(armyIx) = removeMax(armies(armyIx))
+            armies(armyIx - 1) = removeMax(armies(armyIx - 1))
             loop(acc)
           case List(3, armyIx, combatAbility) =>
-            armies(armyIx) = insert(combatAbility, armies(armyIx))
+            armies(armyIx - 1) = insert(combatAbility, armies(armyIx - 1))
             loop(acc)
           case List(4, armyIx, armyJy) =>
-            armies(armyIx) = merge(armies(armyIx), armies(armyJy))
-            armies(armyJy) = Empty
+            armies(armyIx - 1) = merge(armies(armyIx - 1), armies(armyJy - 1))
+            armies(armyJy - 1) = Empty
             loop(acc)
           case _ => throw new Exception("impossible army operation")
         }
