@@ -190,4 +190,46 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       manageArmies(events, nrArmies) shouldEqual List(20, 10)
     }
   }
+
+  "JohnAndFences" - {
+    import JohnAndFences.calcLargestRectangle
+
+    "should calculate the area of the largest rectangle under a histogram" - {
+      "test case 1" in {
+        val nrFences: Int = 6
+        val heights: List[Int] = List(2, 5, 7, 4, 1, 8)
+        calcLargestRectangle(heights, nrFences) shouldEqual 12
+      }
+
+      "test case 2" in {
+        val nrFences: Int = 3
+        val heights: List[Int] = List(2, 3, 4)
+        calcLargestRectangle(heights, nrFences) shouldEqual 6
+      }
+
+      "test case 3" in {
+        val nrFences: Int = 1
+        val heights: List[Int] = List(5)
+        calcLargestRectangle(heights, nrFences) shouldEqual 5
+      }
+
+      "test case 4" in {
+        val nrFences: Int = 3
+        val heights: List[Int] = List(4, 3, 2)
+        calcLargestRectangle(heights, nrFences) shouldEqual 6
+      }
+
+      "test case 5" in {
+        val nrFences: Int = 5
+        val heights: List[Int] = List(2, 3, 8, 7, 3)
+        calcLargestRectangle(heights, nrFences) shouldEqual 14
+      }
+
+      "test case 6" in {
+        val nrFences: Int = 5
+        val heights: List[Int] = List(2, 3, 5, 4, 3)
+        calcLargestRectangle(heights, nrFences) shouldEqual 12
+      }
+    }
+  }
 }
