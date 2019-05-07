@@ -232,4 +232,24 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
       }
     }
   }
+
+  "RangeMinimumQuery" - {
+    import RangeMinimumQuery.calcSegmentMinimum
+
+    "should calculate the minimum of many segments of an array" - {
+      "test case 1" in {
+        val n: Int = 6
+        val array: Vector[Int] = Vector(2, 5, 1, 4, 9, 3)
+        val queries: List[(Int, Int)] = List((0, 5), (1, 1), (0, 1), (1, 4))
+        calcSegmentMinimum(array, n, queries) shouldEqual List(1, 5, 2, 1)
+      }
+
+      "test case 2" in {
+        val n: Int = 10
+        val array: Vector[Int] = Vector(10, 20, 30, 40, 11, 22, 33, 44, 15, 5)
+        val queries: List[(Int, Int)] = List((0, 5), (1, 2), (8, 9), (0, 9), (4, 6))
+        calcSegmentMinimum(array, n, queries) shouldEqual List(10, 20, 5, 5, 11)
+      }
+    }
+  }
 }
