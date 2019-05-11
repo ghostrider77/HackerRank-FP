@@ -59,14 +59,12 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
 
     "should calculate the greatest common divisor of elements of a list given in their canonical forms" - {
       "test case 1" in {
-        val n: Int = 2
         val lines: List[String] = List("7 2", "2 2 7 1")
         val numbers: List[CanonicalForm] = lines.map(readCanonicalForm)
         calcGCD(numbers) shouldEqual Map(7 -> 1)
       }
 
       "test case 2" in {
-        val n: Int = 4
         val lines: List[String] = List("2 2 3 2 5 3", "3 2 5 3 11 1", "2 2 3 3 5 4 7 6 19 18", "3 10 5 15")
         val numbers: List[CanonicalForm] = lines.map(readCanonicalForm)
         calcGCD(numbers) shouldEqual Map(3 -> 2, 5 -> 3)
@@ -249,6 +247,33 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
         val array: Vector[Int] = Vector(10, 20, 30, 40, 11, 22, 33, 44, 15, 5)
         val queries: List[(Int, Int)] = List((0, 5), (1, 2), (8, 9), (0, 9), (4, 6))
         calcSegmentMinimum(array, n, queries) shouldEqual List(10, 20, 5, 5, 11)
+      }
+    }
+  }
+
+  "StockPrediction" - {
+    import StockPrediction.{Query, calcLengthOfLongestSubarrays}
+
+    "should retrieve the length of the longest subarray where the stockprice is in the given range" - {
+      "test case 1" in {
+        val n: Int = 5
+        val prices: Vector[Int] = Vector(3, 5, 2, 6, 1)
+        val queries: List[Query] = List(Query(0, 2), Query(2, 3))
+        calcLengthOfLongestSubarrays(prices, n, queries) shouldEqual List(2, 3)
+      }
+
+      "test case 2" in {
+        val n: Int = 5
+        val prices: Vector[Int] = Vector(2, 3, 5, 2, 4)
+        val queries: List[Query] = List(Query(0, 1), Query(0, 3))
+        calcLengthOfLongestSubarrays(prices, n, queries) shouldEqual List(2, 5)
+      }
+
+      "test case 3" in {
+        val n: Int = 5
+        val prices: Vector[Int] = Vector(4, 3, 5, 2, 1)
+        val queries: List[Query] = List(Query(4, 1), Query(4, 4))
+        calcLengthOfLongestSubarrays(prices, n, queries) shouldEqual List(2, 5)
       }
     }
   }
