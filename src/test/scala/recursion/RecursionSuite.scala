@@ -89,7 +89,7 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
     }
   }
 
-  "PefixCompression" - {
+  "PrefixCompression" - {
     import PrefixCompression.{Result, findCommonPrefix}
 
     "should find the common prefix of 2 strings" in {
@@ -180,6 +180,78 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       "test case 4" in {
         val points: List[Point] = List(Point(4, 0), Point(2, 1), Point(3, -1), Point(2, 0), Point(1, -1), Point(0, 0))
         isPolygonConcave(points) shouldBe true
+      }
+    }
+  }
+
+  "Crosswords-101" - {
+    import Crosswords101.{Board, solveCrossword, readBoard}
+
+    "should solve a crossword" - {
+      "test case 1" in {
+        val lines: Iterator[String] =
+          List(
+            "+-++++++++",
+            "+-++++++++",
+            "+-++++++++",
+            "+-----++++",
+            "+-+++-++++",
+            "+-+++-++++",
+            "+++++-++++",
+            "++------++",
+            "+++++-++++",
+            "+++++-++++"
+          ).toIterator
+        val board: Board = readBoard(lines)
+        val words: List[String] = List("LONDON", "DELHI", "ICELAND", "ANKARA")
+        val solution: Iterator[String] =
+          List(
+            "+L++++++++",
+            "+O++++++++",
+            "+N++++++++",
+            "+DELHI++++",
+            "+O+++C++++",
+            "+N+++E++++",
+            "+++++L++++",
+            "++ANKARA++",
+            "+++++N++++",
+            "+++++D++++"
+          ).toIterator
+        val solutionBoard: Board = readBoard(solution)
+        solveCrossword(board, words) should contain (solutionBoard)
+      }
+
+      "test case 2" in {
+        val lines: Iterator[String] =
+          List(
+            "+-++++++++",
+            "+-++++++++",
+            "+-------++",
+            "+-++++++++",
+            "+-++++++++",
+            "+------+++",
+            "+-+++-++++",
+            "+++++-++++",
+            "+++++-++++",
+            "++++++++++"
+          ).toIterator
+        val board: Board = readBoard(lines)
+        val words: List[String] = List("AGRA", "NORWAY", "ENGLAND", "GWALIOR")
+        val solution: Iterator[String] =
+          List(
+            "+E++++++++",
+            "+N++++++++",
+            "+GWALIOR++",
+            "+L++++++++",
+            "+A++++++++",
+            "+NORWAY+++",
+            "+D+++G++++",
+            "+++++R++++",
+            "+++++A++++",
+            "++++++++++"
+          ).toIterator
+        val solutionBoard: Board = readBoard(solution)
+        solveCrossword(board, words) should contain (solutionBoard)
       }
     }
   }
