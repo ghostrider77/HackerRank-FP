@@ -255,4 +255,42 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
       }
     }
   }
+
+  "Tree Of Life" - {
+    import TreeOfLife.{BinaryTree, CellState, On, Off, runSimulation, buildTree}
+
+    "should print the state of the machine at a point reachable from a given path" - {
+      val treeString: String = "((. X (. . .)) . (X . (. X X)))"
+      val rule: Int = 42354
+
+      "test case 1" in {
+        val tree: BinaryTree = buildTree(treeString.toList)
+        val paths: List[(Int, List[Char])] = List((0, Nil), (0, List('>', '<')), (0, List('>', '>', '>')))
+        val result: List[CellState] = runSimulation(tree, rule, paths)
+        result shouldEqual List(Off, On, On)
+      }
+
+      "test case 2" in {
+        val tree: BinaryTree = buildTree(treeString.toList)
+        val paths: List[(Int, List[Char])] = List((0, Nil), (1, Nil), (1, Nil), (1, Nil), (1, Nil))
+        val result: List[CellState] = runSimulation(tree, rule, paths)
+        result shouldEqual List(Off, On, Off, On, Off)
+      }
+
+      "test case 3" in {
+        val tree: BinaryTree = buildTree(treeString.toList)
+        val paths: List[(Int, List[Char])] = List((4, Nil), (0, Nil))
+        val result: List[CellState] = runSimulation(tree, rule, paths)
+        result shouldEqual List(Off, Off)
+      }
+
+      "test case 4" in {
+        val tree: BinaryTree = buildTree(treeString.toList)
+        val paths: List[(Int, List[Char])] =
+          List((0, List('<', '>')), (4, List('>', '>', '<')), (-3, Nil), (1, List('>', '>', '<')))
+        val result: List[CellState] = runSimulation(tree, rule, paths)
+        result shouldEqual List(Off, On, On, Off)
+      }
+    }
+  }
 }
