@@ -27,7 +27,7 @@ object FightingArmies {
   private def removeMax(heap: PairingHeap): PairingHeap = {
     def mergePairs(heaps: List[PairingHeap]): PairingHeap = heaps match {
       case Nil => Empty
-      case List(h) => h
+      case h :: Nil => h
       case h1 :: h2 :: hs =>  merge(merge(h1, h2), mergePairs(hs))
     }
 
