@@ -1,8 +1,9 @@
 package functional_structures
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class FunctionalStructuresSuite extends FreeSpec with Matchers {
+class FunctionalStructuresSuite extends AnyFreeSpec with Matchers {
 
   "SwapNodes" - {
     import SwapNodes.{BinaryTree, buildBinaryTree, performTraversals}
@@ -155,7 +156,7 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
           "delete",
           "visit child 2",
           "print"
-      ).toIterator
+      ).iterator
       val treeOperations: List[Operation] = readOperations(input, nrOperations)
       performTreeOperations(treeOperations) shouldEqual List(1, 3, 4)
     }
@@ -184,7 +185,7 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
 
     "should retrieve the maximum combat ability for any given armies" in {
       val nrArmies: Int = 2
-      val events: Iterator[String] = List("3 1 10", "3 2 20", "4 1 2", "1 1", "2 1", "1 1").toIterator
+      val events: Iterator[String] = List("3 1 10", "3 2 20", "4 1 2", "1 1", "2 1", "1 1").iterator
       manageArmies(events, nrArmies) shouldEqual List(20, 10)
     }
   }
@@ -276,5 +277,9 @@ class FunctionalStructuresSuite extends FreeSpec with Matchers {
         calcLengthOfLongestSubarrays(prices, n, queries) shouldEqual List(2, 5)
       }
     }
+  }
+
+  "MirkoAtTheConstructionSite" - {
+    import MirkoAtTheConstructionSite.calcTallestBuildings
   }
 }

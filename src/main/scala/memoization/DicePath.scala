@@ -30,7 +30,7 @@ object DicePath {
   private def processLeftAndUpCandidates(pointUp: MaxPathConfigs, pointLeft: MaxPathConfigs): MaxPathConfigs = {
     val fromUp: MaxPathConfigs = processPoint(pointUp, direction = Down)
     val fromLeft: MaxPathConfigs = processPoint(pointLeft, direction = Right)
-    (fromUp.toList ::: fromLeft.toList).groupBy{ case (dice, _) => dice }.mapValues(_.map(_._2).max)
+    (fromUp.toList ::: fromLeft.toList).groupBy{ case (dice, _) => dice }.view.mapValues(_.map(_._2).max).toMap
   }
 
   private def maximalDicePath(nRows: Int, nCols: Int, grid: MutableMap[Point, MaxPathConfigs]): Int = {

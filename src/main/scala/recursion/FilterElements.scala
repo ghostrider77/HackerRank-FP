@@ -8,7 +8,7 @@ object FilterElements {
   def filterElements(testCase: TestCase): List[Int] = {
     val TestCase(lst, k) = testCase
     val uniqueElems: List[Int] = lst.distinct
-    val counts: Map[Int, Int] = lst.groupBy(identity).mapValues(_.length)
+    val counts: Map[Int, Int] = lst.groupMapReduce(identity)(_ => 1)(_ + _)
     val filteredElems: List[Int] = for {
       elem <- uniqueElems
       count = counts.getOrElse(elem, 0)

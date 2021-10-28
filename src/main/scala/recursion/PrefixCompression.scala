@@ -4,7 +4,7 @@ object PrefixCompression {
   final case class Result(commonPrefix: String, suffix1: String, suffix2: String)
 
   def findCommonPrefix(s1: List[Char], s2: List[Char]): Result = {
-    val prefixLength: Int = s1.zip(s2).prefixLength{ case (x, y) => x == y }
+    val prefixLength: Int = s1.zip(s2).segmentLength{ case (x, y) => x == y }
     Result(s1.take(prefixLength).mkString, s1.drop(prefixLength).mkString, s2.drop(prefixLength).mkString)
   }
 

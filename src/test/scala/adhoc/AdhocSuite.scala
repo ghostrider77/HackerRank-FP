@@ -1,8 +1,10 @@
 package adhoc
 
-import org.scalatest.{FreeSpec, Matchers, Inspectors}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Inspectors
 
-class AdhocSuite extends FreeSpec with Matchers with Inspectors {
+class AdhocSuite extends AnyFreeSpec with Matchers with Inspectors {
 
   "JumpingBunnies" - {
     import JumpingBunnies.calcLeastCommonMultiple

@@ -12,7 +12,7 @@ object FunctionOrNot {
     }).toList
 
   def isFunction(pairs: List[Pair]): Boolean =
-    pairs.groupBy(_.x).mapValues(_.map(_.y).toSet).forall{ case (_, yValues) => yValues.size == 1 }
+    pairs.groupBy(_.x).view.mapValues(_.map(_.y).toSet).forall{ case (_, yValues) => yValues.size == 1 }
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()

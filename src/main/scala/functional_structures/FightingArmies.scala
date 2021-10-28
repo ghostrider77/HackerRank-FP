@@ -39,6 +39,11 @@ object FightingArmies {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(nrArmies, nrEvents) => (nrArmies, nrEvents)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   def manageArmies(reader: Iterator[String], nrArmies: Int): List[Int] = {
     val armies: Array[PairingHeap] = Array.fill(nrArmies)(Empty)
 
@@ -69,7 +74,7 @@ object FightingArmies {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(nrArmies, nrEvents): List[Int] = convertToIntList(reader.next())
+    val (nrArmies, nrEvents): (Int, Int) = readParameters(reader.next())
     val result: List[Int ] = manageArmies(reader.take(nrEvents), nrArmies)
     result.foreach(println)
   }

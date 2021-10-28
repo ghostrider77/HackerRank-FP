@@ -5,6 +5,11 @@ object KunduAndBubbleWrap {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   def calculateExpectedNumberOfTrials(n: Int): Double = {
     @tailrec
     def loop(acc: Double, k: Int): Double = {
@@ -17,7 +22,7 @@ object KunduAndBubbleWrap {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(n, m): List[Int] = convertToIntList(reader.next())
+    val (n, m): (Int, Int) = readParameters(reader.next())
     val result: Double = calculateExpectedNumberOfTrials(n * m)
     println(result)
   }

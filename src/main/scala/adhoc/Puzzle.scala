@@ -9,17 +9,25 @@ object Puzzle {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(row, column) => (row, column)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private def exponentiate(base: Int, exponent: Int): Int = (0 until exponent).foldLeft(1)((acc, _) => base * acc)
 
   private def fillTwoByTwoGrid(coveredPoint: Point, upperLeftCorner: Point): List[Tromino] = {
     val Point(x, y) = upperLeftCorner
-    val List(p1, p2, p3): List[Point] = (for {
+    val points: List[Point] = (for {
       dx <- 0 to 1
       dy <- 0 to 1
       p = Point(x + dx, y + dy)
       if p != coveredPoint
     } yield p).toList
-    List(Tromino(p1, p2, p3))
+    points match {
+      case List(p1, p2, p3) => List(Tromino(p1, p2, p3))
+      case _ => throw new Exception("There must be 3 suitable points on a 2-by-2 grid.")
+    }
   }
 
   private def pointInQuarterGivenByCorner(corner: Point, p: Point, size: Int): Boolean =
@@ -58,7 +66,7 @@ object Puzzle {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val exponent: Int = reader.next().toInt
-    val List(row, colum): List[Int] = convertToIntList(reader.next())
+    val (row, colum): (Int, Int) = readParameters(reader.next())
     val size: Int = exponentiate(2, exponent)
     val coveredPoint = Point(row, colum)
     val upperLeftCorner = Point(1, 1)

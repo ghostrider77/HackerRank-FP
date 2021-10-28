@@ -9,9 +9,14 @@ object SwapNodes {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private[functional_structures] def buildBinaryTree(reader: Iterator[String], nrNodes: Int): BinaryTree = {
     val nodes: Vector[(Int, Int)] = (for { _ <- 1 to nrNodes } yield {
-      val List(left, right): List[Int] = convertToIntList(reader.next())
+      val (left, right): (Int, Int) = readParameters(reader.next())
       (left, right)
     }).toVector
 

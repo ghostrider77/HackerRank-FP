@@ -14,7 +14,7 @@ object Mangoes {
   def calcMaximalNumberOfGuests(appetite: List[Int], happiness: List[Int], nrFriends: Int, nrMangoes: Long): Int = {
     def mangoesConsumed(k: Int): Long = {
       val heap: Heap[Long] = Heap()(Ordering[Long].reverse)
-      for { (a, h) <- (appetite, happiness).zipped } heap.enqueue(a + (k - 1) * h.toLong)
+      for { (a, h) <- appetite.lazyZip(happiness) } heap.enqueue(a + (k - 1) * h.toLong)
       (0 until k).foldLeft(0L) {
         case (acc, _) =>
           val nextElem: Long = heap.dequeue()
@@ -40,7 +40,7 @@ object Mangoes {
     val (nrFriends, nrMangoes): (Int, Long) = readInitialData(reader.next())
     val appetite: List[Int] = convertToIntList(reader.next())
     val happiness: List[Int] = convertToIntList(reader.next())
-    val result: Int = calcMaximalNumberOfGuests(appetite, happiness, nrFriends.toInt, nrMangoes)
+    val result: Int = calcMaximalNumberOfGuests(appetite, happiness, nrFriends, nrMangoes)
     println(result)
   }
 }

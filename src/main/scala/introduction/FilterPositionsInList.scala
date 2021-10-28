@@ -12,7 +12,8 @@ object FilterPositionsInList {
     loop(Nil)
   }
 
-  def filterOddPositions(lst: List[Int]): List[Int] = lst.zipWithIndex.filter{ case (_, ix) => ix % 2 == 1 }.unzip._1
+  def filterOddPositions(lst: List[Int]): List[Int] =
+    lst.zipWithIndex.withFilter{ case (_, ix) => ix % 2 == 1 }.map{ case (item, _) => item }
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()

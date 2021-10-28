@@ -19,6 +19,7 @@ object BangaloreBank {
         }
         val updatedPositions: List[FingerPositions] = possibleMoves
           .groupBy{ case FingerPositions(left, right, _) => (left, right) }
+          .view
           .mapValues(_.minBy(_.time))
           .values
           .toList

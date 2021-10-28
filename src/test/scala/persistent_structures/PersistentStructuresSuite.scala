@@ -1,8 +1,9 @@
 package persistent_structures
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class PersistentStructuresSuite extends FreeSpec with Matchers {
+class PersistentStructuresSuite extends AnyFreeSpec with Matchers {
 
   "MinimumMultiple" - {
     import MinimumMultiple.{Operation, calcMinimumMultiples, readOperation}

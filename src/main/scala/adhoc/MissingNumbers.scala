@@ -8,7 +8,7 @@ object MissingNumbers {
     convertToIntList(reader.next())
   }
 
-  private def countElements(lst: List[Int]): Map[Int, Int] = lst.groupBy(identity).mapValues(_.length)
+  private def countElements(lst: List[Int]): Map[Int, Int] = lst.groupMapReduce(identity)(_ => 1)(_ + _)
 
   def getMissingElements(lst1: List[Int], lst2: List[Int]): List[Int] = {
     val valuesAndCounts1: Map[Int, Int] = countElements(lst1)

@@ -3,7 +3,12 @@ package functional_structures
 object RangeMinimumQuery {
   private def log2(x: Double): Double = math.log(x) / math.log(2)
 
-  private def convertToIntArray(line: String): Array[Int] = line.split(" ").map(_.toInt)
+  private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
+
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
 
   def calcSegmentMinimum(array: Vector[Int], n: Int, queries: List[(Int, Int)]): List[Int] = {
     val maxNrNodes: Int = 2 * math.pow(2, math.ceil(log2(n)).toInt).toInt - 1
@@ -37,13 +42,10 @@ object RangeMinimumQuery {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(length, nrQueries): List[Int] = convertToIntArray(reader.next()).toList
-    val array: Vector[Int] = convertToIntArray(reader.next()).toVector
-    val queries: List[(Int, Int)] = (for { _ <- 0 until nrQueries }
-      yield {
-        val List(i, j): List[Int] = convertToIntArray(reader.next()).toList
-        (i, j)
-      }).toList
+    val (length, nrQueries): (Int, Int) = readParameters(reader.next())
+    val array: Vector[Int] = convertToIntList(reader.next()).toVector
+    val queries: List[(Int, Int)] =
+      reader.take(nrQueries).map(convertToIntList).collect{ case List(i, j) => (i, j)}.toList
     val results: List[Int] = calcSegmentMinimum(array, length, queries)
     results.foreach(println)
   }
