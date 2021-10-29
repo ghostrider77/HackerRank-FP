@@ -3,6 +3,11 @@ package recursion
 object SuperDigit {
   import scala.annotation.tailrec
 
+  private def readParameters(line: String): (String, String) = line.split(" ").toList match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   @tailrec
   private def calcSuperDigit(numberAsString: String): Int = {
     if (numberAsString.length == 1) numberAsString.toInt
@@ -18,7 +23,7 @@ object SuperDigit {
 
   def main(args: Array[String]): Unit = {
     val reader = scala.io.Source.stdin.getLines()
-    val List(n, k): List[String] = reader.next().split(" ").toList
+    val (n, k): (String, String) = readParameters(reader.next())
     val result: Int = calcCompoundSuperDigit(n, k.toInt)
     println(result)
   }

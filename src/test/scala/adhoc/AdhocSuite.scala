@@ -59,8 +59,8 @@ class AdhocSuite extends AnyFreeSpec with Matchers with Inspectors {
     import CommonDivisors.calcNumberOfCommonDivisors
 
     "should calculate the number of common divisors of two integers" in {
-      val inputs: List[List[Int]] = List(List(10, 4), List(1, 100), List(288, 240), List(85085, 453600), List(36, 27))
-      inputs.map{ case List(n, m) => calcNumberOfCommonDivisors(n, m) } shouldEqual List(2, 1, 10, 4, 3)
+      val inputs: List[(Int, Int)] = List((10, 4), (1, 100), (288, 240), (85085, 453600), (36, 27))
+      inputs.map{ case (n, m) => calcNumberOfCommonDivisors(n, m) } shouldEqual List(2, 1, 10, 4, 3)
     }
   }
 

@@ -5,6 +5,11 @@ object RevolvingCurve {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private def evaluate(coefficients: List[Int], exponents: List[Int], x: Double): Double =
     coefficients.zip(exponents).foldLeft(0.0){ case (acc, (a, b)) => acc + a * math.pow(x, b) }
 
@@ -29,7 +34,7 @@ object RevolvingCurve {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val coefficients: List[Int] = convertToIntList(reader.next())
     val exponents: List[Int] = convertToIntList(reader.next())
-    val List(left, right): List[Int] = convertToIntList(reader.next())
+    val (left, right): (Int, Int) = readParameters(reader.next())
     val area: Double = calcIntegral(coefficients, exponents, left, right)
     val volume: Double = calcVolume(coefficients, exponents, left, right)
     println(area)

@@ -42,10 +42,8 @@ object DifferentWays {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val nrTestCases: Int = reader.next().toInt
-    val parameters: List[CombinationParameters] = (for { _ <- 0 until nrTestCases } yield {
-      val List(n, k): List[Int] = convertToIntList(reader.next())
-      CombinationParameters(n, k)
-      }).toList
+    val parameters: List[CombinationParameters] =
+      reader.take(nrTestCases).map(convertToIntList).collect{ case List(n, k) => CombinationParameters(n, k) }.toList
     val result: List[Int] = differentWays(parameters)
     result.foreach(println)
   }

@@ -44,11 +44,14 @@ object TreeOfLife {
       case char :: xss => char match {
         case '.' | 'X' => loop(xss, Node(CellState(char), Off, Leaf, Leaf) :: stack)
         case ')' =>
-          val (List(right, center, left), rest): (List[Node], List[Node]) = stack.splitAt(3)
-          val leftChild: Node = left.copy(parentState = center.state)
-          val rightChild: Node = right.copy(parentState = center.state)
-          val parent: Node = center.copy(left = leftChild, right = rightChild)
-          loop(xss, parent :: rest)
+          stack.splitAt(3) match {
+            case (List(right, center, left), rest) =>
+              val leftChild: Node = left.copy(parentState = center.state)
+              val rightChild: Node = right.copy(parentState = center.state)
+              val parent: Node = center.copy(left = leftChild, right = rightChild)
+              loop(xss, parent :: rest)
+            case _ => throw new Exception("Malformed input.")
+          }
         case _ => loop(xss, stack)
       }
     }
@@ -97,13 +100,14 @@ object TreeOfLife {
 
   private def readQueries(reader: Iterator[String], nrQueries: Int): List[(Int, List[Char])] = {
     val pathBoundaryCharacters: Set[Char] = Set('[', ']')
-
-    def readQuery(line: String): (Int, List[Char]) = {
-      val List(relativePosition, path): List[String] = line.split(" ").toList
-      (relativePosition.toInt, path.toList.filterNot(pathBoundaryCharacters.contains))
-    }
-
-    reader.take(nrQueries).map(readQuery).toList
+    reader
+      .take(nrQueries)
+      .map(_.split(" ").toList)
+      .collect{
+        case List(relativePosition, path) =>
+          (relativePosition.toInt, path.toList.filterNot(pathBoundaryCharacters.contains))
+      }
+      .toList
   }
 
   private def reorderQueries(queries: List[(Int, List[Char])]): (List[(Int, List[Char])], List[Int]) = {

@@ -39,6 +39,11 @@ object BrainfuckInterpreter {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private def programLine(line: String): List[Instruction] = line.map(Instruction(_)).filterNot(_ == Comment).toList
 
   def readProgram(inputStream: Iterator[String], nrLines: Int): List[Instruction] =
@@ -114,7 +119,7 @@ object BrainfuckInterpreter {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(_, nrProgramLines): List[Int] = convertToIntList(reader.next())
+    val (_, nrProgramLines): (Int, Int) = readParameters(reader.next())
     val input: List[Char] = reader.next().dropRight(1).toList
     val program: List[Instruction] = readProgram(reader, nrProgramLines)
     val bracketPairPositions: Map[Int, Int] = calcBracketPairIndices(program)

@@ -49,17 +49,20 @@ object Puzzle {
     else if (size == 2) fillTwoByTwoGrid(coveredPoint, upperLeftCorner)
     else {
       val halfSize: Int = size / 2
-      val middlePoints @ List(p1, p2, p3): List[Point] = calcCentralPoints(upperLeftCorner, halfSize, coveredPoint)
-      val coveredPoints: List[Point] = coveredPoint :: middlePoints
-      val newTromino = Tromino(p1, p2, p3)
-      newTromino :: (for {
-        dx <- 0 to 1
-        dy <- 0 to 1
-        corner = Point(upperLeftCorner.x + dx*halfSize, upperLeftCorner.y + dy*halfSize)
-      } yield {
-        val coveredInTheSameSquare: Point = coveredPoints.find(pointInQuarterGivenByCorner(corner, _, halfSize)).get
-        solvePuzzle(halfSize, coveredInTheSameSquare, corner)
-      }).toList.flatten
+      calcCentralPoints(upperLeftCorner, halfSize, coveredPoint) match {
+        case middlePoints@List(p1, p2, p3) =>
+          val coveredPoints: List[Point] = coveredPoint :: middlePoints
+          val newTromino = Tromino(p1, p2, p3)
+          newTromino :: (for {
+            dx <- 0 to 1
+            dy <- 0 to 1
+            corner = Point(upperLeftCorner.x + dx * halfSize, upperLeftCorner.y + dy * halfSize)
+          } yield {
+            val coveredInTheSameSquare: Point = coveredPoints.find(pointInQuarterGivenByCorner(corner, _, halfSize)).get
+            solvePuzzle(halfSize, coveredInTheSameSquare, corner)
+          }).toList.flatten
+        case _ => throw new Exception("Only 3 tiles should be returned.")
+      }
     }
   }
 

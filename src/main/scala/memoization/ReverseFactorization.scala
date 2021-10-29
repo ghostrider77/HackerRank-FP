@@ -6,6 +6,11 @@ object ReverseFactorization {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private def breadthFirstSearch(factors: List[Long], target: Int): Map[Long, Long] = {
     val queue: MutableQueue[Long] = MutableQueue(1L)
 
@@ -53,7 +58,7 @@ object ReverseFactorization {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(n, _): List[Int] = convertToIntList(reader.next())
+    val (n, _): (Int, Int) = readParameters(reader.next())
     val factors: List[Int] = convertToIntList(reader.next())
     val result: List[Long] = calcShortestFactorization(factors, n)
     println(result.mkString(" "))

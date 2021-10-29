@@ -82,10 +82,8 @@ object DicePath {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val numberOfTestcases: Int = reader.next().toInt
-    val gridSizes: List[(Int, Int)] = (for { _ <- 0 until numberOfTestcases } yield {
-      val List(n, m): List[Int] = convertToIntList(reader.next())
-      (n, m)
-    }).toList
+    val gridSizes: List[(Int, Int)] =
+      reader.take(numberOfTestcases).map(convertToIntList).collect{ case List(n, m) => (n, m) }.toList
     val result: List[Int] = calcSumOfMaximalPaths(gridSizes)
     result.foreach(println)
   }

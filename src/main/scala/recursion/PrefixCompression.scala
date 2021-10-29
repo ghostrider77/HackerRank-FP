@@ -13,8 +13,8 @@ object PrefixCompression {
     val s1: String = reader.next()
     val s2: String = reader.next()
     val Result(prefix, suffix1, suffix2) = findCommonPrefix(s1.toList, s2.toList)
-    println(prefix.length + " " + prefix)
-    println(suffix1.length + " " + suffix1)
-    println(suffix2.length + " " + suffix2)
+    println(s"${prefix.length} $prefix")
+    println(s"${suffix1.length} $suffix1")
+    println(s"${suffix2.length} $suffix2")
   }
 }

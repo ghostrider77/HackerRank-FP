@@ -31,11 +31,12 @@ object BitterChocolate {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val numberOfTestCases: Int = reader.next().toInt
-    val results: List[Boolean] = (for { _ <- 0 until numberOfTestCases } yield {
-      val List(lower, middle, upper): List[Int] = convertToIntList(reader.next())
-      doesFirstPlayerWin(Board(upper, middle, lower))
-    }).toList
-
+    val results: List[Boolean] =
+      reader
+        .take(numberOfTestCases)
+        .map(convertToIntList)
+        .collect{ case List(lower, middle, upper) => doesFirstPlayerWin(Board(upper, middle, lower)) }
+        .toList
     results.foreach(if (_) println("WIN") else println("LOSE"))
   }
 }

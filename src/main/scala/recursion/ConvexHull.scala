@@ -36,15 +36,15 @@ object ConvexHull {
 
   private def keepFarthestPointWithSameAngle(p: Point, sortedPoints: List[Point]): List[Point] = {
     @tailrec
-    def loop(acc: List[Point], currentFarthest: Point, xs: List[List[Point]]): List[Point] = xs match {
+    def loop(acc: List[Point], currentFarthest: Point, xs: List[(Point, Point)]): List[Point] = xs match {
       case Nil => (currentFarthest :: acc).reverse
-      case List(q, r) :: xss =>
+      case (q, r) :: xss =>
         val orient: Double = orientation(p, q, r)
         if (orient == 0) loop(acc, r, xss)
         else loop(currentFarthest :: acc, r, xss)
       }
 
-    loop(Nil, sortedPoints.head, sortedPoints.sliding(2, 1).toList)
+    loop(Nil, sortedPoints.head, sortedPoints.sliding(2, 1).collect{ case List(a, b) => (a, b) }.toList)
   }
 
   private def getReorderedPoints(points: List[Point], ix: Index): (Point, List[Point]) = {
@@ -60,10 +60,13 @@ object ConvexHull {
 
     @tailrec
     def removeConcavePoints(convexHull: List[Point], nextPoint: Point): List[Point] = {
-      val List(q, p): List[Point] = convexHull.take(2)
-      val orient: Double = orientation(p, q, nextPoint)
-      if (orient < 0) removeConcavePoints(convexHull.tail, nextPoint)
-      else nextPoint :: convexHull
+      convexHull.take(2) match {
+        case List(q, p) =>
+          val orient: Double = orientation(p, q, nextPoint)
+          if (orient < 0) removeConcavePoints(convexHull.tail, nextPoint)
+          else nextPoint :: convexHull
+        case _ => throw new Exception("Not enough point to remove.")
+      }
     }
 
     @tailrec
@@ -83,18 +86,17 @@ object ConvexHull {
     val ix: Index = findIndexOfPointWithSmallestYCoordinate(points)
     val (startPoint, orderedPoints): (Point, List[Point]) = getReorderedPoints(points, ix)
     val convexHull: List[Point] = runGrahamScan(startPoint :: orderedPoints)
-    (startPoint :: convexHull).sliding(2, 1).foldLeft(0.0){
-      case (perimeter, List(p, q)) => perimeter + distance(p, q)
-    }
+    (startPoint :: convexHull)
+      .sliding(2, 1)
+      .collect{ case List(p, q) => (p, q) }
+      .foldLeft(0.0){ case (perimeter, (p, q)) => perimeter + distance(p, q) }
   }
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val nrPoints: Int = reader.next().toInt
-    val points: List[Point] = (for { _ <- 0 until nrPoints } yield {
-      val List(x, y): List[Double] = convertToDoubleList(reader.next())
-      Point(x, y)
-    }).toList
+    val points: List[Point] =
+      reader.take(nrPoints).map(convertToDoubleList).collect{ case List(x, y) => Point(x, y) }.toList
     println(calcConvexHullPerimeter(points))
   }
 }

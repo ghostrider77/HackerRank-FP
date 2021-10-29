@@ -42,7 +42,7 @@ object SherlockAndTheMaze {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val numberOfTestCases: Int = reader.next().toInt
     val data: List[List[Int]] = (for { _ <- 0 until numberOfTestCases} yield convertToIntList(reader.next())).toList
-    val results: List[Int] = data.map{ case List(n, m, k) => calcNumberOfPathsWithAtMostKTurns(n, m, k) }
+    val results: List[Int] = data.collect{ case List(n, m, k) => calcNumberOfPathsWithAtMostKTurns(n, m, k) }
     results.foreach(println)
   }
 }

@@ -70,6 +70,7 @@ object MinimumMultiple {
   def readOperation(line: String): Operation = line.split(" ").toList match {
     case List("Q", i, j) => Query(i.toInt, j.toInt)
     case List("U", ix, m) => Update(ix.toInt, m.toInt)
+    case _ => throw new Exception("Unknown operation.")
   }
 
   private def calcSegmentTree(array: Vector[Int],
