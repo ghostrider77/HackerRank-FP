@@ -11,6 +11,11 @@ object MatrixRotation {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int, Int) = convertToIntList(line) match {
+    case List(nRows, nCols, numberOfRotations) => (nRows, nCols, numberOfRotations)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   private def peelMatrix(matrix: Vector[Vector[Int]], nRows: Int, nCols: Int): Vector[Layer] = {
     @tailrec
     def getLayers(acc: List[Layer], layerId: Int, rows: Int, cols: Int): List[Layer] = {
@@ -59,7 +64,7 @@ object MatrixRotation {
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
-    val List(nRows, nCols, numberOfRotations): List[Int] = convertToIntList(reader.next())
+    val (nRows, nCols, numberOfRotations): (Int, Int, Int) = readParameters(reader.next())
     val matrix: Vector[Vector[Int]] =
       (for { _ <- 0 until nRows } yield reader.next().split(" ").map(_.toInt).toVector).toVector
     val result: Matrix = calcRotatedMatrix(matrix, nRows, nCols, numberOfRotations)

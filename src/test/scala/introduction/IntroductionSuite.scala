@@ -1,8 +1,10 @@
 package introduction
 
-import org.scalatest.{FreeSpec, Matchers, Inspectors}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Inspectors
 
-class IntroductionSuite extends FreeSpec with Matchers with Inspectors {
+class IntroductionSuite extends AnyFreeSpec with Matchers with Inspectors {
 
   "SolveMeFirst" - {
     import SolveMeFirst.sumTwoInts

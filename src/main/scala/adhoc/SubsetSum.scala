@@ -1,7 +1,7 @@
 package adhoc
 
 object SubsetSum {
-  import scala.collection.Searching.{search, Found, InsertionPoint}
+  import scala.collection.Searching.{Found, InsertionPoint}
 
   private def convertToIntVector(line: String): Vector[Int] = line.split(" ").map(_.toInt).toVector
 

@@ -48,10 +48,13 @@ object ConcavePolygon {
     def loop(convexHull: List[Point], remainingPoints: List[Point]): Boolean = remainingPoints match {
       case Nil => false
       case nextPoint :: rest =>
-        val List(q, p): List[Point] = convexHull.take(2)
-        val orient: Double = orientation(p, q, nextPoint)
-        if (orient < 0) true
-        else loop(nextPoint :: convexHull, rest)
+        convexHull.take(2) match {
+          case List(q, p) =>
+            val orient: Double = orientation(p, q, nextPoint)
+            if (orient < 0) true
+            else loop(nextPoint :: convexHull, rest)
+          case _ => throw new Exception("Not enough points to remove.")
+        }
       }
 
     loop(left.reverse, right)
@@ -68,10 +71,8 @@ object ConcavePolygon {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val nrPoints: Int = reader.next().toInt
-    val points: List[Point] = (for { _ <- 0 until nrPoints } yield {
-      val List(x, y): List[Double] = convertToDoubleList(reader.next())
-      Point(x, y)
-    }).toList
+    val points: List[Point] =
+      reader.take(nrPoints).map(convertToDoubleList).collect{ case List(x, y) => Point(x, y) }.toList
     val result: Boolean = isPolygonConcave(points)
     println(if (result) "YES" else "NO")
   }

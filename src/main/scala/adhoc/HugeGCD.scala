@@ -2,7 +2,6 @@ package adhoc
 
 object HugeGCD {
   import scala.annotation.tailrec
-  import scala.collection.breakOut
   import scala.collection.mutable.ListBuffer
 
   type CanonicalForm = Map[Int, Int]
@@ -57,8 +56,8 @@ object HugeGCD {
   private def calcCanonicalForm(numbers: List[Int]): CanonicalForm = {
     def merge(acc: CanonicalForm, factors: CanonicalForm): CanonicalForm = {
       (for {
-        p <- acc.keySet.union(factors.keySet)
-      } yield p -> (acc.getOrElse(p, 0) + factors.getOrElse(p, 0)))(breakOut)
+        p <- acc.keySet.union(factors.keySet).iterator
+      } yield p -> (acc.getOrElse(p, 0) + factors.getOrElse(p, 0))).toMap
     }
 
     numbers.foldLeft(Map(): CanonicalForm)((acc, n) => if (n == 1) acc else merge(acc, calcPrimeFactorization(n)))

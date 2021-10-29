@@ -21,7 +21,7 @@ object CommonDivisors {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val nrCases: Int = reader.next().toInt
     val testCases: List[List[Int]] = (for { _ <- 0 until nrCases } yield convertToIntList(reader.next())).toList
-    val results: List[Int] = testCases.map{ case List(n, m) => calcNumberOfCommonDivisors(n, m) }
+    val results: List[Int] = testCases.collect{ case List(n, m) => calcNumberOfCommonDivisors(n, m) }
     results.foreach(println)
   }
 }

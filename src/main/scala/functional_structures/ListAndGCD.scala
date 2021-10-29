@@ -6,7 +6,7 @@ object ListAndGCD {
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
   private[functional_structures] def readCanonicalForm(line: String): CanonicalForm =
-    convertToIntList(line).grouped(2).map{ case List(p, exp) => (p, exp) }.toMap
+    convertToIntList(line).grouped(2).collect{ case List(p, exp) => (p, exp) }.toMap
 
   def calcGCD(numbers: List[CanonicalForm]): CanonicalForm = {
     def mergeCanonicalForms(acc: CanonicalForm, n: CanonicalForm): CanonicalForm = {

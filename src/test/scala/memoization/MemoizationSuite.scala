@@ -1,8 +1,9 @@
 package memoization
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class MemoizationSuite extends FreeSpec with Matchers {
+class MemoizationSuite extends AnyFreeSpec with Matchers {
 
   "NumberOfBinarySearchTrees" - {
     import NumberOfBinarySearchTrees.calcNumberOfBinarySearchTrees
@@ -210,6 +211,81 @@ class MemoizationSuite extends FreeSpec with Matchers {
         val attempt: String = "abcdef"
         val result: String = getPasswords(LoginAttempt(passwords, attempt))
         isResultValid(passwords, result, attempt) shouldBe true
+      }
+    }
+  }
+
+  "Klotski" - {
+    import Klotski.{Cell, Board, solvePuzzle, readInitialBoard}
+
+    "should find the shortest way to solve the puzzle" - {
+      "test case 1" in {
+        val nrRows: Int = 3
+        val nrCols: Int = 4
+        val boardString: Iterator[String] = Iterator(
+          "A A C .",
+          "A B C .",
+          "B B . ."
+        )
+        val target: String = "B"
+        val targetCell = Cell(0, 1)
+        val board: Board = readInitialBoard(boardString, nrRows, nrCols)
+        solvePuzzle(board, target, targetCell) should have length 2
+      }
+
+      "test case 2" in {
+        val nrRows: Int = 3
+        val nrCols: Int = 6
+        val boardString: Iterator[String] = Iterator(
+          "A . . . C .",
+          "A . B . C .",
+          "D . B . . ."
+        )
+        val target: String = "D"
+        val targetCell = Cell(0, 5)
+        val board: Board = readInitialBoard(boardString, nrRows, nrCols)
+        solvePuzzle(board, target, targetCell) should have length 1
+      }
+
+      "test case 3" in {
+        val nrRows: Int = 4
+        val nrCols: Int = 3
+        val boardString: Iterator[String] = Iterator(
+          "AA AA BB",
+          "CC .. BB",
+          "CC DD DD",
+          ".. .. EE",
+        )
+        val target: String = "EE"
+        val targetCell = Cell(1, 1)
+        val board: Board = readInitialBoard(boardString, nrRows, nrCols)
+        solvePuzzle(board, target, targetCell) should have length 6
+      }
+
+      "test case 4" in {
+        val nrRows: Int = 3
+        val nrCols: Int = 3
+        val boardString: Iterator[String] = Iterator(
+          "A . .",
+          ". . .",
+          ". . ."
+        )
+        val target: String = "A"
+        val targetCell = Cell(2, 2)
+        val board: Board = readInitialBoard(boardString, nrRows, nrCols)
+        solvePuzzle(board, target, targetCell) should have length 1
+      }
+
+      "test case 5" in {
+        val nrRows: Int = 1
+        val nrCols: Int = 1
+        val boardString: Iterator[String] = Iterator(
+          "A"
+        )
+        val target: String = "A"
+        val targetCell = Cell(0, 0)
+        val board: Board = readInitialBoard(boardString, nrRows, nrCols)
+        solvePuzzle(board, target, targetCell) should have length 0
       }
     }
   }

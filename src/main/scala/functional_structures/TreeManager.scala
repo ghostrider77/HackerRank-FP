@@ -87,7 +87,7 @@ object TreeManager {
   final case class InsertChild(x: Int) extends Operation
   final case object Delete extends Operation
 
-  private[functional_structures] def readOperations(reader: Iterator[String], nrOperations: Int): List[Operation] = {
+  def readOperations(reader: Iterator[String], nrOperations: Int): List[Operation] = {
     def parseLine(line: String): Operation = line.split(" ").toList match {
       case List("change", x) => Change(x.toInt)
       case List("print") => Print
@@ -99,6 +99,7 @@ object TreeManager {
       case List("insert", "right", x) => InsertRight(x.toInt)
       case List("insert", "child", x) => InsertChild(x.toInt)
       case List("delete") => Delete
+      case _ => throw new Exception("Unknown operation.")
     }
 
     reader.map(parseLine).take(nrOperations).toList

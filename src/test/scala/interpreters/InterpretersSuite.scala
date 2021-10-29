@@ -1,8 +1,9 @@
 package interpreters
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class InterpretersSuite extends FreeSpec with Matchers {
+class InterpretersSuite extends AnyFreeSpec with Matchers {
 
   "BrainfuckInterpreter" - {
     import BrainfuckInterpreter.{calcBracketPairIndices, readProgram, Result, runInterpreter, Instruction}
@@ -12,7 +13,7 @@ class InterpretersSuite extends FreeSpec with Matchers {
         val nrLines: Int = 20
         val input: List[Char] = Nil
         val code: Iterator[String] =
-          List(
+          Iterator(
             "+++++ +++++             initialize counter (cell #0) to 10",
             "[                       use loop to set the next four cells to 70/100/30/10",
             "> +++++ ++              add  7 to cell #1",
@@ -33,7 +34,7 @@ class InterpretersSuite extends FreeSpec with Matchers {
             "----- - .               print 'l'",
             "----- --- .             print 'd'",
             "> + .                   print '!'"
-          ).toIterator
+          )
         val program: List[Instruction] = readProgram(code, nrLines)
         val bracketPairPositions: Map[Int, Int] = calcBracketPairIndices(program)
         val result: Result = runInterpreter(program.toVector, input, bracketPairPositions)
@@ -44,14 +45,14 @@ class InterpretersSuite extends FreeSpec with Matchers {
         val nrLines: Int = 6
         val input: List[Char] = "abcxyz".toList
         val code: Iterator[String] =
-          List(
+          Iterator(
             ",+. This program will 6 characters",
             ",+. For first 3 characters it will",
             ",+. print its successor",
             ",-. For last 3 characters it will",
             ",-. print its predecessor",
             ",-."
-        ).toIterator
+        )
         val program: List[Instruction] = readProgram(code, nrLines)
         val bracketPairPositions: Map[Int, Int] = calcBracketPairIndices(program)
         val result: Result = runInterpreter(program.toVector, input, bracketPairPositions)
@@ -62,7 +63,7 @@ class InterpretersSuite extends FreeSpec with Matchers {
         val nrLines: Int = 10
         val input: List[Char] = "pm".toList
         val code: Iterator[String] =
-          List(
+          Iterator(
             "++",
             "[           loop will execute only 2 time",
             "    >",
@@ -73,7 +74,7 @@ class InterpretersSuite extends FreeSpec with Matchers {
             "    -",
             "]",
             "+[]"
-          ).toIterator
+          )
         val program: List[Instruction] = readProgram(code, nrLines)
         val bracketPairPositions: Map[Int, Int] = calcBracketPairIndices(program)
         val result: Result = runInterpreter(program.toVector, input, bracketPairPositions)

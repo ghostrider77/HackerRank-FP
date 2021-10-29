@@ -60,10 +60,7 @@ object PrisonTransport {
     val nrPrisoners: Int = reader.next().toInt
     val nrPairs: Int = reader.next().toInt
     val prisonerPairs: List[(Int, Int)] =
-      (for { _ <- 0 until nrPairs } yield {
-        val List(first, second): List[Int] = convertToIntList(reader.next())
-        (first - 1, second - 1)
-      }).toList
+      reader.take(nrPairs).map(convertToIntList).collect{ case List(first, second) => (first - 1, second - 1) }.toList
     val result: Int = calcMinimalTransportationCost(nrPrisoners, prisonerPairs)
     println(result)
   }

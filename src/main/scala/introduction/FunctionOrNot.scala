@@ -6,13 +6,10 @@ object FunctionOrNot {
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
   private def readTestCase(n: Int, reader: Iterator[String]): List[Pair] =
-    (for { _ <- 0 until n } yield {
-      val List(x, y): List[Int] = convertToIntList(reader.next())
-      Pair(x, y)
-    }).toList
+    reader.take(n).map(convertToIntList).collect{ case List(x, y) => Pair(x, y) }.toList
 
   def isFunction(pairs: List[Pair]): Boolean =
-    pairs.groupBy(_.x).mapValues(_.map(_.y).toSet).forall{ case (_, yValues) => yValues.size == 1 }
+    pairs.groupBy(_.x).view.mapValues(_.map(_.y).toSet).forall{ case (_, yValues) => yValues.size == 1 }
 
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()

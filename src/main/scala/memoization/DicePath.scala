@@ -30,7 +30,7 @@ object DicePath {
   private def processLeftAndUpCandidates(pointUp: MaxPathConfigs, pointLeft: MaxPathConfigs): MaxPathConfigs = {
     val fromUp: MaxPathConfigs = processPoint(pointUp, direction = Down)
     val fromLeft: MaxPathConfigs = processPoint(pointLeft, direction = Right)
-    (fromUp.toList ::: fromLeft.toList).groupBy{ case (dice, _) => dice }.mapValues(_.map(_._2).max)
+    (fromUp.toList ::: fromLeft.toList).groupBy{ case (dice, _) => dice }.view.mapValues(_.map(_._2).max).toMap
   }
 
   private def maximalDicePath(nRows: Int, nCols: Int, grid: MutableMap[Point, MaxPathConfigs]): Int = {
@@ -82,10 +82,8 @@ object DicePath {
   def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val numberOfTestcases: Int = reader.next().toInt
-    val gridSizes: List[(Int, Int)] = (for { _ <- 0 until numberOfTestcases } yield {
-      val List(n, m): List[Int] = convertToIntList(reader.next())
-      (n, m)
-    }).toList
+    val gridSizes: List[(Int, Int)] =
+      reader.take(numberOfTestcases).map(convertToIntList).collect{ case List(n, m) => (n, m) }.toList
     val result: List[Int] = calcSumOfMaximalPaths(gridSizes)
     result.foreach(println)
   }

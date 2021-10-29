@@ -6,7 +6,7 @@ object StockPrediction {
   final case class Query(day: Int, margin: Int)
   final case class MinMax(min: Int, max: Int)
 
-  private def convertToIntArray(line: String): Array[Int] = line.split(" ").map(_.toInt)
+  private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
   private def combine(minmax1: MinMax, minmax2: MinMax): MinMax =
     MinMax(math.min(minmax1.min, minmax2.min), math.max(minmax1.max, minmax2.max))
@@ -83,15 +83,17 @@ object StockPrediction {
     queries.map(calcSubarrayLength(prices, n, segmentTree, _))
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val n: Int = reader.next().toInt
-    val prices: Vector[Int] = convertToIntArray(reader.next()).toVector
+    val prices: Vector[Int] = convertToIntList(reader.next()).toVector
     val nrQueries: Int = reader.next().toInt
-    val queries: List[Query] = (for { _ <- 0 until nrQueries } yield {
-      val List(d, margin): List[Int] = convertToIntArray(reader.next()).toList
-      Query(d, margin)
-    }).toList
+    val queries: List[Query] =
+      reader
+        .take(nrQueries)
+        .map(convertToIntList)
+        .collect{ case List(d, margin) => Query(d, margin) }
+        .toList
     val result: List[Int] = calcLengthOfLongestSubarrays(prices, n, queries)
     result.foreach(println)
   }

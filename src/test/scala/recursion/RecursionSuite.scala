@@ -1,8 +1,10 @@
 package recursion
 
-import org.scalatest.{FreeSpec, Matchers, Inspectors}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.Inspectors
 
-class RecursionSuite extends FreeSpec with Matchers with Inspectors {
+class RecursionSuite extends AnyFreeSpec with Matchers with Inspectors {
   "ComputingGCD" - {
     import ComputingGCD.calcGCD
 
@@ -190,7 +192,7 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
     "should solve a crossword" - {
       "test case 1" in {
         val lines: Iterator[String] =
-          List(
+          Iterator(
             "+-++++++++",
             "+-++++++++",
             "+-++++++++",
@@ -201,11 +203,11 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
             "++------++",
             "+++++-++++",
             "+++++-++++"
-          ).toIterator
+          )
         val board: Board = readBoard(lines)
         val words: List[String] = List("LONDON", "DELHI", "ICELAND", "ANKARA")
         val solution: Iterator[String] =
-          List(
+          Iterator(
             "+L++++++++",
             "+O++++++++",
             "+N++++++++",
@@ -216,14 +218,14 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
             "++ANKARA++",
             "+++++N++++",
             "+++++D++++"
-          ).toIterator
+          )
         val solutionBoard: Board = readBoard(solution)
         solveCrossword(board, words) should contain (solutionBoard)
       }
 
       "test case 2" in {
         val lines: Iterator[String] =
-          List(
+          Iterator(
             "+-++++++++",
             "+-++++++++",
             "+-------++",
@@ -234,11 +236,11 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
             "+++++-++++",
             "+++++-++++",
             "++++++++++"
-          ).toIterator
+          )
         val board: Board = readBoard(lines)
         val words: List[String] = List("AGRA", "NORWAY", "ENGLAND", "GWALIOR")
         val solution: Iterator[String] =
-          List(
+          Iterator(
             "+E++++++++",
             "+N++++++++",
             "+GWALIOR++",
@@ -249,7 +251,7 @@ class RecursionSuite extends FreeSpec with Matchers with Inspectors {
             "+++++R++++",
             "+++++A++++",
             "++++++++++"
-          ).toIterator
+          )
         val solutionBoard: Board = readBoard(solution)
         solveCrossword(board, words) should contain (solutionBoard)
       }

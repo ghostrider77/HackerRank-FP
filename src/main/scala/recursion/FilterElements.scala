@@ -5,10 +5,15 @@ object FilterElements {
 
   private def convertToIntList(line: String): List[Int] = line.split(" ").map(_.toInt).toList
 
+  private def readParameters(line: String): (Int, Int) = convertToIntList(line) match {
+    case List(n, m) => (n, m)
+    case _ => throw new Exception("Unexpected input data format.")
+  }
+
   def filterElements(testCase: TestCase): List[Int] = {
     val TestCase(lst, k) = testCase
     val uniqueElems: List[Int] = lst.distinct
-    val counts: Map[Int, Int] = lst.groupBy(identity).mapValues(_.length)
+    val counts: Map[Int, Int] = lst.groupMapReduce(identity)(_ => 1)(_ + _)
     val filteredElems: List[Int] = for {
       elem <- uniqueElems
       count = counts.getOrElse(elem, 0)
@@ -22,7 +27,7 @@ object FilterElements {
     val reader: Iterator[String] = scala.io.Source.stdin.getLines()
     val n: Int = reader.next().toInt
     val testCases: List[TestCase] = (for { _ <- 0 until n } yield {
-      val List(_, k): List[Int] = convertToIntList(reader.next())
+      val (_, k): (Int, Int) = readParameters(reader.next())
       val seq: List[Int] = convertToIntList(reader.next())
       TestCase(seq, k)
     }).toList
